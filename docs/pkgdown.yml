@@ -1,0 +1,13 @@
+pandoc: 2.1.1
+pkgdown: 1.1.0.9000
+pkgdown_sha: eec35964f8c7a091ff953c7e07b2e285d7475df1
+articles:
+  CaseStudy-RNAseqQuantification: CaseStudy-RNAseqQuantification.html
+  CaseStudy-SingleCellSimulation: CaseStudy-SingleCellSimulation.html
+  Feature-ErrorHandling: Feature-ErrorHandling.html
+  Feature-Iterative: Feature-Iterative.html
+  Feature-Parallel: Feature-Parallel.html
+  SummarizedBenchmark-ClassDetails: SummarizedBenchmark-ClassDetails.html
+  SummarizedBenchmark-FullCaseStudy: SummarizedBenchmark-FullCaseStudy.html
+  SummarizedBenchmark-Introduction: SummarizedBenchmark-Introduction.html
+
