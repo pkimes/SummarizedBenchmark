@@ -19,6 +19,11 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r echo = FALSE, include = FALSE}
+knitr::opts_chunk$set(tidy = FALSE, cache = TRUE, dev = "png",
+                      message = FALSE, error = FALSE, warning = FALSE)
+```
+
 # Introduction
 
 To demonstrate the use of *SummarizedBenchmark* to compare software that is not written in *R*, we will compare the output of *sailfish*, *salmon* and *kallisto*, three alignment-free methods for transcript isoform quantification. Due to running time, disk space, and memory issues, some parts of this vignette are not run during the package build. Instead, we provide pre-computed objects containing the final *SummarizedBenchmark* object. 
