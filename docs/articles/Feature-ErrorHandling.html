@@ -110,7 +110,7 @@
       <h1>Feature: Error Handling</h1>
                         <h4 class="author">Patrick K. Kimes, Alejandro Reyes</h4>
             
-            <h4 class="date">29 October 2018</h4>
+            <h4 class="date">5 November 2018</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/areyesq89/SummarizedBenchmark/blob/master/vignettes/Feature-ErrorHandling.Rmd"><code>vignettes/Feature-ErrorHandling.Rmd</code></a></small>
       <div class="hidden name"><code>Feature-ErrorHandling.Rmd</code></div>
@@ -120,7 +120,7 @@
     
         <div class="abstract">
       <p class="abstract">Abstract</p>
-      “Method execution in the <code>SummarizedBenchmark</code> framework is handled by the <code><a href="../reference/buildBench.html">buildBench()</a></code> function. Occassionally, errors occur when running several methods on a new data set. The approach to error handling implemented in the <code><a href="../reference/buildBench.html">buildBench()</a></code> function is described in this vignette along with options to disable error handling. SummarizedBenchmark package version: 1.99.2”
+      “Method execution in the <code>SummarizedBenchmark</code> framework is handled by the <code><a href="../reference/buildBench.html">buildBench()</a></code> function. Occassionally, errors occur when running several methods on a new data set. The approach to error handling implemented in the <code><a href="../reference/buildBench.html">buildBench()</a></code> function is described in this vignette along with options to disable error handling. SummarizedBenchmark package version: 1.99.3”
     </div>
     
 <div id="introduction" class="section level1">
@@ -169,12 +169,12 @@
 <p>We can also check the values of the assays.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">sapply</span>(<span class="kw">assayNames</span>(sbep), assay, <span class="dt">x =</span> sbep, <span class="dt">simplify =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## $keepFast
-##      slowMethod fastMethod
-## [1,]         NA -1.3968935
-## [2,]         NA -0.7363518
-## [3,]         NA  0.5589791
-## [4,]         NA  0.5108952
-## [5,]         NA -0.8168784
+##      slowMethod  fastMethod
+## [1,]         NA  0.03554083
+## [2,]         NA  0.46968793
+## [3,]         NA -0.86463699
+## [4,]         NA -0.56756989
+## [5,]         NA -0.76146404
 ## 
 ## $keepSlow
 ##      slowMethod fastMethod

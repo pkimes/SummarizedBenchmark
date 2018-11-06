@@ -110,7 +110,7 @@
       <h1>Case Study: scRNA-Seq Simulation</h1>
                         <h4 class="author">Patrick K. Kimes, Alejandro Reyes</h4>
             
-            <h4 class="date">29 October 2018</h4>
+            <h4 class="date">5 November 2018</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/areyesq89/SummarizedBenchmark/blob/master/vignettes/CaseStudy-SingleCellSimulation.Rmd"><code>vignettes/CaseStudy-SingleCellSimulation.Rmd</code></a></small>
       <div class="hidden name"><code>CaseStudy-SingleCellSimulation.Rmd</code></div>
@@ -120,7 +120,7 @@
     
         <div class="abstract">
       <p class="abstract">Abstract</p>
-      “In this vignette, we illustrate a simple approach to using the <em>SummarizedBenchmark</em> framework for organizing benchmarks with complex outputs, i.e. when methods return non-vector-like objects. This approach is demonstrated with a comparison of simulators for single-cell RNA-seq data implemented in the <em><a href="http://bioconductor.org/packages/splatter">splatter</a></em> package. SummarizedBenchmark package version: 1.99.2”
+      “In this vignette, we illustrate a simple approach to using the <em>SummarizedBenchmark</em> framework for organizing benchmarks with complex outputs, i.e. when methods return non-vector-like objects. This approach is demonstrated with a comparison of simulators for single-cell RNA-seq data implemented in the <em><a href="http://bioconductor.org/packages/splatter">splatter</a></em> package. SummarizedBenchmark package version: 1.99.3”
     </div>
     
 <div id="introduction" class="section level1">
@@ -173,10 +173,8 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">fluidigm_dat &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">in_data =</span> <span class="kw">assay</span>(sce, <span class="st">"counts"</span>),</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2">                     <span class="dt">in_verbose =</span> <span class="ot">FALSE</span>,</a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">                     <span class="dt">in_seed =</span> <span class="dv">19120128</span>)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">sb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/buildBench.html">buildBench</a></span>(bd, <span class="dt">data =</span> fluidigm_dat) </a></code></pre></div>
-<pre><code>## Warning in FUN(X[[i]], ...): 
-## Method outputs could not be reduced to matrix.</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">sb</a></code></pre></div>
+<a class="sourceLine" id="cb6-4" data-line-number="4">sb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/buildBench.html">buildBench</a></span>(bd, <span class="dt">data =</span> fluidigm_dat) </a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">sb</a></code></pre></div>
 <pre><code>## class: SummarizedBenchmark 
 ## dim: 1 3 
 ## metadata(1): sessions
@@ -187,50 +185,41 @@
 ## colData names(7): func.pkg func.pkg.vers ... param.seed
 ##   session.idx</code></pre>
 <p>The simulated data sets are returned as a single row in the assay of the <em>SummarizedBenchmark</em> object, with each column containing a list with a single <em>SingleCellExperiment</em> object.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">assay</span>(sb)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">assay</span>(sb)</a></code></pre></div>
 <pre><code>##      splat simple lun
 ## [1,] ?     ?      ?</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">sapply</span>(<span class="kw">assay</span>(sb), class)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">sapply</span>(<span class="kw">assay</span>(sb), class)</a></code></pre></div>
 <pre><code>## [1] "SingleCellExperiment" "SingleCellExperiment" "SingleCellExperiment"</code></pre>
 </div>
 <div id="comparing-the-results" class="section level1">
 <h1 class="hasAnchor">
 <a href="#comparing-the-results" class="anchor"></a>Comparing the Results</h1>
 <p>Now that we have our set of simulated data sets, we can compare the behavior of each simulator. Fortunately, the <em><a href="http://bioconductor.org/packages/splatter">splatter</a></em> package includes two useful functions for comparing <em>SingleCellExperiment</em> objects (<code>compareSCEs</code> and <code>diffSCEs</code>). The assay of the <em>SummarizedBenchmark</em> can be passed directly to these functions. We also concatenate the original <code>fluidigm</code> data set, <code>sce</code>, with the simulated data sets for comparison.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">res_compare &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/splatter/topics/compareSCEs">compareSCEs</a></span>(<span class="kw">c</span>(<span class="dt">ref =</span> sce, <span class="kw">assay</span>(sb)[<span class="dv">1</span>, ]))</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">res_diff &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/splatter/topics/diffSCEs">diffSCEs</a></span>(<span class="kw">c</span>(<span class="dt">ref =</span> sce, <span class="kw">assay</span>(sb)[<span class="dv">1</span>, ]), <span class="dt">ref =</span> <span class="st">"ref"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">res_compare &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/splatter/topics/compareSCEs">compareSCEs</a></span>(<span class="kw">c</span>(<span class="dt">ref =</span> sce, <span class="kw">assay</span>(sb)[<span class="dv">1</span>, ]))</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">res_diff &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/splatter/topics/diffSCEs">diffSCEs</a></span>(<span class="kw">c</span>(<span class="dt">ref =</span> sce, <span class="kw">assay</span>(sb)[<span class="dv">1</span>, ]), <span class="dt">ref =</span> <span class="st">"ref"</span>)</a></code></pre></div>
 <p>While these functions produce several metrics and plots, we only include two for illustration. More details on the output of these functions can be found in the documentation of the <em><a href="http://bioconductor.org/packages/splatter">splatter</a></em> package.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">res_compare<span class="op">$</span>Plots<span class="op">$</span>MeanVar</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">res_compare<span class="op">$</span>Plots<span class="op">$</span>MeanVar</a></code></pre></div>
 <p><img src="CaseStudy-SingleCellSimulation_files/figure-html/plot-sim-result-comparison-1.png" width="700"></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">res_diff<span class="op">$</span>Plots<span class="op">$</span>MeanVar</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">res_diff<span class="op">$</span>Plots<span class="op">$</span>MeanVar</a></code></pre></div>
 <p><img src="CaseStudy-SingleCellSimulation_files/figure-html/plot-sim-result-comparison-2.png" width="700"></p>
 <p>While (conveniently) functions already existed for comparing the simulated data sets, we can also define comparison metrics using the <em>SummarizedBenchmark</em> framework with <code>addPerformanceMetrics()</code>. We illustrate this feature using the “zeros per cell” and “zeros per gene” metrics shown in Figure 3 of <span class="citation">(Zappia, Phipson, and Oshlack 2017)</span>. Since the metric for each method is a vector (e.g. of zeros per cell) and not a single value, we again use <code>list</code> to wrap the output in the <code>evalFunction</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">sb &lt;-<span class="st"> </span>sb <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="../reference/addPerformanceMetric.html">addPerformanceMetric</a></span>(</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">        <span class="dt">assay =</span> <span class="st">"default"</span>,</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">        <span class="dt">evalMetric =</span> <span class="st">"zerosPerCell"</span>,</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">        <span class="dt">evalFunction =</span> <span class="cf">function</span>(query, truth) {</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">            <span class="kw">colMeans</span>(<span class="kw">assay</span>(query[[<span class="dv">1</span>]], <span class="st">"counts"</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">        }) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="../reference/addPerformanceMetric.html">addPerformanceMetric</a></span>(</a>
-<a class="sourceLine" id="cb17-9" data-line-number="9">        <span class="dt">assay =</span> <span class="st">"default"</span>,</a>
-<a class="sourceLine" id="cb17-10" data-line-number="10">        <span class="dt">evalMetric =</span> <span class="st">"zerosPerGene"</span>,</a>
-<a class="sourceLine" id="cb17-11" data-line-number="11">        <span class="dt">evalFunction =</span> <span class="cf">function</span>(query, truth) {</a>
-<a class="sourceLine" id="cb17-12" data-line-number="12">            <span class="kw">rowMeans</span>(<span class="kw">assay</span>(query[[<span class="dv">1</span>]], <span class="st">"counts"</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</a>
-<a class="sourceLine" id="cb17-13" data-line-number="13">        } )</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">sb &lt;-<span class="st"> </span>sb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="../reference/addPerformanceMetric.html">addPerformanceMetric</a></span>(</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">        <span class="dt">assay =</span> <span class="st">"default"</span>,</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">        <span class="dt">evalMetric =</span> <span class="st">"zerosPerCell"</span>,</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">        <span class="dt">evalFunction =</span> <span class="cf">function</span>(query, truth) {</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">            <span class="kw">colMeans</span>(<span class="kw">assay</span>(query[[<span class="dv">1</span>]], <span class="st">"counts"</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">        }) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="st">    </span><span class="kw"><a href="../reference/addPerformanceMetric.html">addPerformanceMetric</a></span>(</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9">        <span class="dt">assay =</span> <span class="st">"default"</span>,</a>
+<a class="sourceLine" id="cb15-10" data-line-number="10">        <span class="dt">evalMetric =</span> <span class="st">"zerosPerGene"</span>,</a>
+<a class="sourceLine" id="cb15-11" data-line-number="11">        <span class="dt">evalFunction =</span> <span class="cf">function</span>(query, truth) {</a>
+<a class="sourceLine" id="cb15-12" data-line-number="12">            <span class="kw">rowMeans</span>(<span class="kw">assay</span>(query[[<span class="dv">1</span>]], <span class="st">"counts"</span>) <span class="op">==</span><span class="st"> </span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb15-13" data-line-number="13">        } )</a></code></pre></div>
 <p>Next, the metrics are calculated using <code>estimatePerformanceMetrics</code>. For plotting, we only keep the <code>label</code>, <code>value</code>, and <code>performanceMetric</code> columns of the returned table.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">sbmets &lt;-<span class="st"> </span><span class="kw"><a href="../reference/estimateMetrics.html">estimatePerformanceMetrics</a></span>(sb, <span class="dt">tidy =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<pre><code>## Warning: `lang()` is soft-deprecated as of rlang 0.2.0.
-## Please use `call2()` instead
-## This warning is displayed once per session.</code></pre>
-<pre><code>## Warning: `new_overscope()` is soft-deprecated as of rlang 0.2.0.
-## Please use `new_data_mask()` instead
-## This warning is displayed once per session.</code></pre>
-<pre><code>## Warning: `overscope_eval_next()` is soft-deprecated as of rlang 0.2.0.
-## Please use `eval_tidy()` with a data mask instead
-## This warning is displayed once per session.</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">sbmets  &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(sbmets, label, value, performanceMetric)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="kw">head</span>(sbmets)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">sbmets &lt;-<span class="st"> </span><span class="kw"><a href="../reference/estimateMetrics.html">estimatePerformanceMetrics</a></span>(sb, <span class="dt">tidy =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">sbmets  &lt;-<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(sbmets, label, value, performanceMetric)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw">head</span>(sbmets)</a></code></pre></div>
 <pre><code>##    label        value performanceMetric
 ## 1  splat 0.5717, ....      zerosPerCell
 ## 2 simple 0.6872, ....      zerosPerCell
@@ -239,24 +228,8 @@
 ## 5 simple 1, 1, 0.....      zerosPerGene
 ## 6    lun 0.7, 0.4....      zerosPerGene</code></pre>
 <p>Notice that the <code>value</code> is a list for each method and metric. These vectors can be expanded using <code><a href="https://tidyr.tidyverse.org/reference/unnest.html">tidyr::unnest</a></code>.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">sbmets &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span>(sbmets)</a></code></pre></div>
-<pre><code>## Warning: Unquoting language objects with `!!!` is soft-deprecated as of rlang 0.3.0.
-## Please use `!!` instead.
-## 
-##   # Bad:
-##   dplyr::select(data, !!!enquo(x))
-## 
-##   # Good:
-##   dplyr::select(data, !!enquo(x))    # Unquote single quosure
-##   dplyr::select(data, !!!enquos(x))  # Splice list of quosures
-## 
-## This warning is displayed once per session.</code></pre>
-<pre><code>## Warning: The `printer` argument is soft-deprecated as of rlang 0.3.0.
-## This warning is displayed once per session.</code></pre>
-<pre><code>## Warning: `list_len()` is soft-deprecated as of rlang 0.2.0.
-## Please use `new_list()` instead
-## This warning is displayed once per session.</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">head</span>(sbmets)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">sbmets &lt;-<span class="st"> </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span>(sbmets)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">head</span>(sbmets)</a></code></pre></div>
 <pre><code>##   label performanceMetric  value
 ## 1 splat      zerosPerCell 0.5717
 ## 2 splat      zerosPerCell 0.6150
@@ -265,29 +238,27 @@
 ## 5 splat      zerosPerCell 0.5526
 ## 6 splat      zerosPerCell 0.5860</code></pre>
 <p>Finally, the performance metrics can be explored using standard plotting functions.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">ggplot</span>(sbmets, <span class="kw">aes</span>(<span class="dt">x =</span> label, <span class="dt">y =</span> value,</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2">                   <span class="dt">color =</span> label, <span class="dt">fill =</span> label)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="st">    </span><span class="kw">xlab</span>(<span class="st">"method"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-5" data-line-number="5"><span class="st">    </span><span class="kw">scale_color_discrete</span>(<span class="st">"method"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="st">    </span><span class="kw">scale_fill_discrete</span>(<span class="st">"method"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="st">    </span><span class="kw">facet_grid</span>(performanceMetric <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
-<a class="sourceLine" id="cb30-8" data-line-number="8"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">ggplot</span>(sbmets, <span class="kw">aes</span>(<span class="dt">x =</span> label, <span class="dt">y =</span> value,</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">                   <span class="dt">color =</span> label, <span class="dt">fill =</span> label)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_boxplot</span>(<span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">    </span><span class="kw">xlab</span>(<span class="st">"method"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="st">    </span><span class="kw">scale_color_discrete</span>(<span class="st">"method"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="st">    </span><span class="kw">scale_fill_discrete</span>(<span class="st">"method"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="st">    </span><span class="kw">facet_grid</span>(performanceMetric <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="st">    </span><span class="kw">theme_bw</span>()</a></code></pre></div>
 <p><img src="CaseStudy-SingleCellSimulation_files/figure-html/plot-performace-metrics-1.png" width="700"></p>
 </div>
 <div id="new-data-sets" class="section level1">
 <h1 class="hasAnchor">
 <a href="#new-data-sets" class="anchor"></a>New Data Sets</h1>
 <p>An advantage of the <em>SummarizedBenchmark</em> framework is that rerunning the comparisons with a new data set is as simple as calling <code>buildBench</code> with the same BenchDesign object paired with new <code>data =</code> input. To illustrate this, we run the same simulators again, but with simulation parameters estimated using the example single-cell count data included with the <em><a href="http://bioconductor.org/packages/scater">scater</a></em> package.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">data</span>(sc_example_counts, <span class="dt">package =</span> <span class="st">"scater"</span>)</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2">scec &lt;-<span class="st"> </span><span class="kw">SingleCellExperiment</span>(<span class="dt">assays =</span> <span class="kw">list</span>(<span class="dt">counts =</span> sc_example_counts))</a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4">scater_dat &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">in_data =</span> scec,</a>
-<a class="sourceLine" id="cb31-5" data-line-number="5">                   <span class="dt">in_verbose =</span> <span class="ot">FALSE</span>,</a>
-<a class="sourceLine" id="cb31-6" data-line-number="6">                   <span class="dt">in_seed =</span> <span class="dv">19120128</span>)</a>
-<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="kw"><a href="../reference/buildBench.html">buildBench</a></span>(bd, <span class="dt">data =</span> scater_dat)</a></code></pre></div>
-<pre><code>## Warning in FUN(X[[i]], ...): 
-## Method outputs could not be reduced to matrix.</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">data</span>(sc_example_counts, <span class="dt">package =</span> <span class="st">"scater"</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">scec &lt;-<span class="st"> </span><span class="kw">SingleCellExperiment</span>(<span class="dt">assays =</span> <span class="kw">list</span>(<span class="dt">counts =</span> sc_example_counts))</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">scater_dat &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">in_data =</span> scec,</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5">                   <span class="dt">in_verbose =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">                   <span class="dt">in_seed =</span> <span class="dv">19120128</span>)</a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="kw"><a href="../reference/buildBench.html">buildBench</a></span>(bd, <span class="dt">data =</span> scater_dat)</a></code></pre></div>
 <pre><code>## class: SummarizedBenchmark 
 ## dim: 1 3 
 ## metadata(1): sessions

@@ -110,7 +110,7 @@
       <h1>SummarizedBenchmark: Full Case Study</h1>
                         <h4 class="author">Patrick K. Kimes, Alejandro Reyes</h4>
             
-            <h4 class="date">29 October 2018</h4>
+            <h4 class="date">5 November 2018</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/areyesq89/SummarizedBenchmark/blob/master/vignettes/SummarizedBenchmark-FullCaseStudy.Rmd"><code>vignettes/SummarizedBenchmark-FullCaseStudy.Rmd</code></a></small>
       <div class="hidden name"><code>SummarizedBenchmark-FullCaseStudy.Rmd</code></div>
@@ -120,7 +120,7 @@
     
         <div class="abstract">
       <p class="abstract">Abstract</p>
-      “While the foundations of the <code>SummarizedBenchmark</code> framework are introduced in the <strong>SummarizedBenchmark: Introduction</strong> vignette, this vignette provides a more detailed case study of performing a benchmarking comparison using the package. A more complex example of comparing methods for differential gene expression testing with RNA-seq data is presented, and used to motivate and demonstrate several core features of the <code>SummarizedBenchmark</code> approach. SummarizedBenchmark package version: 1.99.2”
+      “While the foundations of the <code>SummarizedBenchmark</code> framework are introduced in the <strong>SummarizedBenchmark: Introduction</strong> vignette, this vignette provides a more detailed case study of performing a benchmarking comparison using the package. A more complex example of comparing methods for differential gene expression testing with RNA-seq data is presented, and used to motivate and demonstrate several core features of the <code>SummarizedBenchmark</code> approach. SummarizedBenchmark package version: 1.99.3”
     </div>
     
 <div id="introduction" class="section level1">
@@ -289,15 +289,6 @@
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="../reference/estimateMetrics.html">estimatePerformanceMetrics</a></span>(sb, <span class="dt">alpha =</span> <span class="kw">c</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>), <span class="dt">tidy =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">    </span>dplyr<span class="op">:::</span><span class="kw">select</span>(label, value, performanceMetric, alpha) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">    </span><span class="kw">tail</span>()</a></code></pre></div>
-<pre><code>## Warning: `lang()` is soft-deprecated as of rlang 0.2.0.
-## Please use `call2()` instead
-## This warning is displayed once per session.</code></pre>
-<pre><code>## Warning: `new_overscope()` is soft-deprecated as of rlang 0.2.0.
-## Please use `new_data_mask()` instead
-## This warning is displayed once per session.</code></pre>
-<pre><code>## Warning: `overscope_eval_next()` is soft-deprecated as of rlang 0.2.0.
-## Please use `eval_tidy()` with a data mask instead
-## This warning is displayed once per session.</code></pre>
 <pre><code>##     label      value performanceMetric alpha
 ## 55 deseq2 0.10988246               FNR   0.1
 ## 56  edgeR 0.09381113               FNR   0.1
@@ -307,10 +298,10 @@
 ## 60   voom 0.08741018               FNR   0.2</code></pre>
 <p>Furthermore, the functions <code><a href="../reference/plotMethodsOverlap.html">plotMethodsOverlap()</a></code> and <code><a href="../reference/plotROC.html">plotROC()</a></code> are helpful to visualize the performance of the different methods, in case these methods output q-values.</p>
 <p><code><a href="../reference/plotMethodsOverlap.html">plotMethodsOverlap()</a></code> is a wrapper for the function <code>upset()</code> from the <em><a href="https://CRAN.R-project.org/package=UpSetR">UpSetR</a></em> package that is helpful to visualize the overlaps between hits of different methods for a given alpha value.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw"><a href="../reference/plotMethodsOverlap.html">plotMethodsOverlap</a></span>(sb, <span class="dt">assay =</span> <span class="st">"status"</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>, <span class="dt">order.by =</span> <span class="st">"freq"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../reference/plotMethodsOverlap.html">plotMethodsOverlap</a></span>(sb, <span class="dt">assay =</span> <span class="st">"status"</span>, <span class="dt">alpha =</span> <span class="fl">0.1</span>, <span class="dt">order.by =</span> <span class="st">"freq"</span>)</a></code></pre></div>
 <p><img src="SummarizedBenchmark-FullCaseStudy_files/figure-html/unnamed-chunk-13-1.png" width="432"></p>
 <p>From the plot above, it is evident that there is a large number of transcripts that are detected to be differentially expressed by all three methods. There are also smallers sets of transcripts that are detected uniquely by a single method or subsets of methods. Another typical way to compare the performance of different methods are Receiver Operating Characteristic (ROC) curves. The function <code><a href="../reference/plotROC.html">plotROC()</a></code> inputs a <em>SummarizeBenchmark</em> object and draws the ROC curves for all methods contained in it.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">SummarizedBenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedBenchmark/topics/plotROC">plotROC</a></span>(sb, <span class="dt">assay =</span> <span class="st">"status"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">SummarizedBenchmark<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedBenchmark/topics/plotROC">plotROC</a></span>(sb, <span class="dt">assay =</span> <span class="st">"status"</span>)</a></code></pre></div>
 <p><img src="SummarizedBenchmark-FullCaseStudy_files/figure-html/unnamed-chunk-14-1.png" width="480"></p>
 </div>
 <div id="storing-multiple-outputs" class="section level1">
@@ -319,47 +310,47 @@
 <p>The case study described above has assumed that we are interested in a single numeric vector for each method, namely, a vector of p-values. These p-values are stored as the sole <code>assay</code> in the <em>SummarizedBenchmark</em> object returned by <code><a href="../reference/buildBench.html">buildBench()</a></code>. However, in many cases, there are multiple values of interest to be compared across methods. For example, looking at the estimated log-fold changes in addition to p-values may be informative when comparing methods for differential expression.</p>
 <p>The <em>BenchDesign</em> framework supports multiple assays with the <code>post =</code> parameter of the <code><a href="../reference/addMethod.html">addMethod()</a></code> call. When zero or one function is specified to <code>post =</code> for all methods, as in the examples above, the results are stored as a single <code>assay</code>. However, if <code>post =</code> is passed a named list of functions, separate <code>assay</code>s will be created using the names and functions in each list. Since the <code>assay</code> names are taken from <code>post =</code>, all entries in the list must be named. Furthermore, since results are matched across methods using the assay names, if a method is missing a <code>post =</code> function for a given assay name, the corresponding column in the <code>assay</code>s will be set to <code>NA</code>.</p>
 <p>To track both p-values and log-fold change values for each method, we write a new set of wrapper functions to extract log-fold changes for each method, similar to the wrapper functions written earlier for extracting p-values. Unlike the case above where we only wanted the p-values of each method, we cannot simple write a single wrapper function for running methods and extracting the results. Instead, separate <code>func =</code> and <code>post =</code> specifications are necessary.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">deseq2_lfc &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">    x<span class="op">$</span>log2FoldChange</a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb26-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb26-5" data-line-number="5">edgeR_lfc &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb26-6" data-line-number="6">    x<span class="op">$</span>table<span class="op">$</span>logFC</a>
-<a class="sourceLine" id="cb26-7" data-line-number="7">}</a>
-<a class="sourceLine" id="cb26-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb26-9" data-line-number="9">voom_lfc &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
-<a class="sourceLine" id="cb26-10" data-line-number="10">    x<span class="op">$</span>coefficients[, <span class="dv">2</span>]</a>
-<a class="sourceLine" id="cb26-11" data-line-number="11">}</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">deseq2_lfc &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2">    x<span class="op">$</span>log2FoldChange</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">edgeR_lfc &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">    x<span class="op">$</span>table<span class="op">$</span>logFC</a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb23-9" data-line-number="9">voom_lfc &lt;-<span class="st"> </span><span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb23-10" data-line-number="10">    x<span class="op">$</span>coefficients[, <span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb23-11" data-line-number="11">}</a></code></pre></div>
 <p>The primary wrapper function and a list of accessor functions are passed to <code>func =</code> and <code>post =</code> respectively.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">bd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/BenchDesign.html">BenchDesign</a></span>(<span class="dt">data =</span> mydat) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="../reference/addMethod.html">addMethod</a></span>(<span class="dt">label =</span> <span class="st">"deseq2"</span>,</a>
-<a class="sourceLine" id="cb27-3" data-line-number="3">              <span class="dt">func =</span> deseq2_run,</a>
-<a class="sourceLine" id="cb27-4" data-line-number="4">              <span class="dt">post =</span> <span class="kw">list</span>(<span class="dt">pv =</span> deseq2_pv,</a>
-<a class="sourceLine" id="cb27-5" data-line-number="5">                          <span class="dt">lfc =</span> deseq2_lfc),</a>
-<a class="sourceLine" id="cb27-6" data-line-number="6">              <span class="dt">params =</span> rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/quotation.html">quos</a></span>(<span class="dt">countData =</span> cntdat,</a>
-<a class="sourceLine" id="cb27-7" data-line-number="7">                                   <span class="dt">colData =</span> coldat, </a>
-<a class="sourceLine" id="cb27-8" data-line-number="8">                                   <span class="dt">design =</span> <span class="op">~</span>condition,</a>
-<a class="sourceLine" id="cb27-9" data-line-number="9">                                   <span class="dt">contrast =</span> <span class="kw">c</span>(<span class="st">"condition"</span>, <span class="st">"2"</span>, <span class="st">"1"</span>))</a>
-<a class="sourceLine" id="cb27-10" data-line-number="10">              ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb27-11" data-line-number="11"><span class="st">    </span><span class="kw"><a href="../reference/addMethod.html">addMethod</a></span>(<span class="dt">label =</span> <span class="st">"edgeR"</span>,</a>
-<a class="sourceLine" id="cb27-12" data-line-number="12">              <span class="dt">func =</span> edgeR_run,</a>
-<a class="sourceLine" id="cb27-13" data-line-number="13">              <span class="dt">post =</span> <span class="kw">list</span>(<span class="dt">pv =</span> edgeR_pv,</a>
-<a class="sourceLine" id="cb27-14" data-line-number="14">                          <span class="dt">lfc =</span> edgeR_lfc),</a>
-<a class="sourceLine" id="cb27-15" data-line-number="15">              <span class="dt">params =</span> rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/quotation.html">quos</a></span>(<span class="dt">countData =</span> cntdat,</a>
-<a class="sourceLine" id="cb27-16" data-line-number="16">                                   <span class="dt">group =</span> coldat<span class="op">$</span>condition,</a>
-<a class="sourceLine" id="cb27-17" data-line-number="17">                                   <span class="dt">design =</span> <span class="op">~</span>coldat<span class="op">$</span>condition)</a>
-<a class="sourceLine" id="cb27-18" data-line-number="18">              ) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb27-19" data-line-number="19"><span class="st">    </span><span class="kw"><a href="../reference/addMethod.html">addMethod</a></span>(<span class="dt">label =</span> <span class="st">"voom"</span>,</a>
-<a class="sourceLine" id="cb27-20" data-line-number="20">              <span class="dt">func =</span> voom_run,</a>
-<a class="sourceLine" id="cb27-21" data-line-number="21">              <span class="dt">post =</span> <span class="kw">list</span>(<span class="dt">pv =</span> voom_pv,</a>
-<a class="sourceLine" id="cb27-22" data-line-number="22">                          <span class="dt">lfc =</span> voom_lfc),</a>
-<a class="sourceLine" id="cb27-23" data-line-number="23">              <span class="dt">params =</span> rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/quotation.html">quos</a></span>(<span class="dt">countData =</span> cntdat,</a>
-<a class="sourceLine" id="cb27-24" data-line-number="24">                                   <span class="dt">group =</span> coldat<span class="op">$</span>condition,</a>
-<a class="sourceLine" id="cb27-25" data-line-number="25">                                   <span class="dt">design =</span> <span class="op">~</span>coldat<span class="op">$</span>condition)</a>
-<a class="sourceLine" id="cb27-26" data-line-number="26">              )</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">bd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/BenchDesign.html">BenchDesign</a></span>(<span class="dt">data =</span> mydat) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="../reference/addMethod.html">addMethod</a></span>(<span class="dt">label =</span> <span class="st">"deseq2"</span>,</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3">              <span class="dt">func =</span> deseq2_run,</a>
+<a class="sourceLine" id="cb24-4" data-line-number="4">              <span class="dt">post =</span> <span class="kw">list</span>(<span class="dt">pv =</span> deseq2_pv,</a>
+<a class="sourceLine" id="cb24-5" data-line-number="5">                          <span class="dt">lfc =</span> deseq2_lfc),</a>
+<a class="sourceLine" id="cb24-6" data-line-number="6">              <span class="dt">params =</span> rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/quotation.html">quos</a></span>(<span class="dt">countData =</span> cntdat,</a>
+<a class="sourceLine" id="cb24-7" data-line-number="7">                                   <span class="dt">colData =</span> coldat, </a>
+<a class="sourceLine" id="cb24-8" data-line-number="8">                                   <span class="dt">design =</span> <span class="op">~</span>condition,</a>
+<a class="sourceLine" id="cb24-9" data-line-number="9">                                   <span class="dt">contrast =</span> <span class="kw">c</span>(<span class="st">"condition"</span>, <span class="st">"2"</span>, <span class="st">"1"</span>))</a>
+<a class="sourceLine" id="cb24-10" data-line-number="10">              ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-11" data-line-number="11"><span class="st">    </span><span class="kw"><a href="../reference/addMethod.html">addMethod</a></span>(<span class="dt">label =</span> <span class="st">"edgeR"</span>,</a>
+<a class="sourceLine" id="cb24-12" data-line-number="12">              <span class="dt">func =</span> edgeR_run,</a>
+<a class="sourceLine" id="cb24-13" data-line-number="13">              <span class="dt">post =</span> <span class="kw">list</span>(<span class="dt">pv =</span> edgeR_pv,</a>
+<a class="sourceLine" id="cb24-14" data-line-number="14">                          <span class="dt">lfc =</span> edgeR_lfc),</a>
+<a class="sourceLine" id="cb24-15" data-line-number="15">              <span class="dt">params =</span> rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/quotation.html">quos</a></span>(<span class="dt">countData =</span> cntdat,</a>
+<a class="sourceLine" id="cb24-16" data-line-number="16">                                   <span class="dt">group =</span> coldat<span class="op">$</span>condition,</a>
+<a class="sourceLine" id="cb24-17" data-line-number="17">                                   <span class="dt">design =</span> <span class="op">~</span>coldat<span class="op">$</span>condition)</a>
+<a class="sourceLine" id="cb24-18" data-line-number="18">              ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-19" data-line-number="19"><span class="st">    </span><span class="kw"><a href="../reference/addMethod.html">addMethod</a></span>(<span class="dt">label =</span> <span class="st">"voom"</span>,</a>
+<a class="sourceLine" id="cb24-20" data-line-number="20">              <span class="dt">func =</span> voom_run,</a>
+<a class="sourceLine" id="cb24-21" data-line-number="21">              <span class="dt">post =</span> <span class="kw">list</span>(<span class="dt">pv =</span> voom_pv,</a>
+<a class="sourceLine" id="cb24-22" data-line-number="22">                          <span class="dt">lfc =</span> voom_lfc),</a>
+<a class="sourceLine" id="cb24-23" data-line-number="23">              <span class="dt">params =</span> rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/quotation.html">quos</a></span>(<span class="dt">countData =</span> cntdat,</a>
+<a class="sourceLine" id="cb24-24" data-line-number="24">                                   <span class="dt">group =</span> coldat<span class="op">$</span>condition,</a>
+<a class="sourceLine" id="cb24-25" data-line-number="25">                                   <span class="dt">design =</span> <span class="op">~</span>coldat<span class="op">$</span>condition)</a>
+<a class="sourceLine" id="cb24-26" data-line-number="26">              )</a></code></pre></div>
 <p>When the <em>BenchDesign</em> is evaluated using <code><a href="../reference/buildBench.html">buildBench()</a></code>, the resulting <em>SummarizedBenchmark</em> will be generated with two assays: <code>"pv"</code> and <code>"lfc"</code>. As before, the ground truth can be specified using the <code>truthCols =</code> parameter. When multiple assays are used, <code>truthCols =</code> expects a named vector of <code>assay-name = "column-name"</code> pairs.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">sb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/buildBench.html">buildBench</a></span>(<span class="dt">bd =</span> bd, <span class="dt">truthCols =</span> <span class="kw">c</span>(<span class="dt">pv =</span> <span class="st">"status"</span>, <span class="dt">lfc =</span> <span class="st">"lfc"</span>))</a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">sb</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">sb &lt;-<span class="st"> </span><span class="kw"><a href="../reference/buildBench.html">buildBench</a></span>(<span class="dt">bd =</span> bd, <span class="dt">truthCols =</span> <span class="kw">c</span>(<span class="dt">pv =</span> <span class="st">"status"</span>, <span class="dt">lfc =</span> <span class="st">"lfc"</span>))</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">sb</a></code></pre></div>
 <pre><code>## class: SummarizedBenchmark 
 ## dim: 15677 3 
 ## metadata(1): sessions
@@ -370,7 +361,7 @@
 ## colData names(9): func.pkg func.pkg.vers ... param.group
 ##   session.idx</code></pre>
 <p>We can verify that the two assays contain the expected values.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">head</span>(<span class="kw">assay</span>(sb, <span class="st">"pv"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">head</span>(<span class="kw">assay</span>(sb, <span class="st">"pv"</span>))</a></code></pre></div>
 <pre><code>##            deseq2        edgeR         voom
 ## [1,] 2.875541e-04 2.074073e-04 6.103023e-03
 ## [2,] 2.799371e-23 2.121422e-16 1.239445e-04
@@ -378,7 +369,7 @@
 ## [4,] 6.930834e-01 6.621236e-01 3.357040e-01
 ## [5,] 2.479616e-11 2.468951e-09 3.978989e-04
 ## [6,] 9.057130e-01 8.947438e-01 5.199404e-01</code></pre>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">head</span>(<span class="kw">assay</span>(sb, <span class="st">"lfc"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">head</span>(<span class="kw">assay</span>(sb, <span class="st">"lfc"</span>))</a></code></pre></div>
 <pre><code>##          deseq2       edgeR       voom
 ## [1,]  3.7329019   3.6767779  3.5232524
 ## [2,] -5.3905346  -5.3773940 -5.5543949
@@ -393,25 +384,25 @@
 <a href="#recycling-a-benchdesign" class="anchor"></a>Recycling a BenchDesign</h1>
 <p>Early on, we mentioned that a <em>BenchDesign</em> can be initialized without any data. Here, we describe why this is supported and how to run <code><a href="../reference/buildBench.html">buildBench()</a></code> on a <em>BenchDesign</em> not containing a data set.</p>
 <p>When benchmarking several methods, it is generally considered good practice to apply the methods to more than just a single data set. Under the SummarizedBenchmark framework, this naturally translates to recycling the same set of methods defined in a single <em>BenchDesign</em> object across multiple data sets. First, we initialize a <em>BenchDesign</em> without any methods or data set.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">bdnull &lt;-<span class="st"> </span><span class="kw"><a href="../reference/BenchDesign.html">BenchDesign</a></span>()</a>
-<a class="sourceLine" id="cb34-2" data-line-number="2">bdnull</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">bdnull &lt;-<span class="st"> </span><span class="kw"><a href="../reference/BenchDesign.html">BenchDesign</a></span>()</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2">bdnull</a></code></pre></div>
 <pre><code>## BenchDesign ------------------------------------------------ 
 ##   benchmark data:
 ##     NULL
 ##   benchmark methods:
 ##     none</code></pre>
 <p>As before, methods can be added to the <em>BenchDesign</em> with <code><a href="../reference/addMethod.html">addMethod()</a></code>, and the benchmark experiment run using <code><a href="../reference/buildBench.html">buildBench()</a></code>.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">bdnull &lt;-<span class="st"> </span>bdnull <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="../reference/addMethod.html">addMethod</a></span>(<span class="dt">label =</span> <span class="st">"bonf"</span>,</a>
-<a class="sourceLine" id="cb36-3" data-line-number="3">              <span class="dt">func =</span> p.adjust,</a>
-<a class="sourceLine" id="cb36-4" data-line-number="4">              <span class="dt">params =</span> rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/quotation.html">quos</a></span>(<span class="dt">p =</span> pval,</a>
-<a class="sourceLine" id="cb36-5" data-line-number="5">                                   <span class="dt">method =</span> <span class="st">"bonferroni"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb36-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="../reference/addMethod.html">addMethod</a></span>(<span class="dt">label =</span> <span class="st">"BH"</span>,</a>
-<a class="sourceLine" id="cb36-7" data-line-number="7">              <span class="dt">func =</span> p.adjust,</a>
-<a class="sourceLine" id="cb36-8" data-line-number="8">              <span class="dt">params =</span> rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/quotation.html">quos</a></span>(<span class="dt">p =</span> pval,</a>
-<a class="sourceLine" id="cb36-9" data-line-number="9">                                   <span class="dt">method =</span> <span class="st">"BH"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">bdnull &lt;-<span class="st"> </span>bdnull <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="../reference/addMethod.html">addMethod</a></span>(<span class="dt">label =</span> <span class="st">"bonf"</span>,</a>
+<a class="sourceLine" id="cb33-3" data-line-number="3">              <span class="dt">func =</span> p.adjust,</a>
+<a class="sourceLine" id="cb33-4" data-line-number="4">              <span class="dt">params =</span> rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/quotation.html">quos</a></span>(<span class="dt">p =</span> pval,</a>
+<a class="sourceLine" id="cb33-5" data-line-number="5">                                   <span class="dt">method =</span> <span class="st">"bonferroni"</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="../reference/addMethod.html">addMethod</a></span>(<span class="dt">label =</span> <span class="st">"BH"</span>,</a>
+<a class="sourceLine" id="cb33-7" data-line-number="7">              <span class="dt">func =</span> p.adjust,</a>
+<a class="sourceLine" id="cb33-8" data-line-number="8">              <span class="dt">params =</span> rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/quotation.html">quos</a></span>(<span class="dt">p =</span> pval,</a>
+<a class="sourceLine" id="cb33-9" data-line-number="9">                                   <span class="dt">method =</span> <span class="st">"BH"</span>))</a></code></pre></div>
 <p>The <code><a href="../reference/buildBench.html">buildBench()</a></code> method accepts an optional <code>data =</code> parameter. When specified, this data set is used to run the experiment, taking precedence over the data set specified in (or missing from) the <em>BenchDesign</em> object.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw"><a href="../reference/buildBench.html">buildBench</a></span>(bdnull, <span class="dt">data =</span> tdat)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw"><a href="../reference/buildBench.html">buildBench</a></span>(bdnull, <span class="dt">data =</span> tdat)</a></code></pre></div>
 <pre><code>## class: SummarizedBenchmark 
 ## dim: 50 2 
 ## metadata(1): sessions
@@ -433,35 +424,35 @@
 <a href="#appendix" class="anchor"></a>Appendix</h1>
 <p>Here, we describe how the data using The data is available for download from ArrayExpress. Expression data for each sample is provided in the RSEM output format. Corresponding information for the ground truth underlying the simulated data is also available, including transcript differential expression status.</p>
 <p>First, we download and import the transcript-level TPM values using the tximport 1.8.0 package and store this data in an object called <code>txi</code>.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">library</span>(tximport)</a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb39-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb39-4" data-line-number="4">d &lt;-<span class="st"> </span><span class="kw">tempdir</span>()</a>
-<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="kw">download.file</span>(<span class="dt">url =</span> <span class="kw">paste0</span>(<span class="st">"https://www.ebi.ac.uk/arrayexpress/files/"</span>,</a>
-<a class="sourceLine" id="cb39-6" data-line-number="6">                           <span class="st">"E-MTAB-4119/E-MTAB-4119.processed.3.zip"</span>),</a>
-<a class="sourceLine" id="cb39-7" data-line-number="7">              <span class="dt">destfile =</span> <span class="kw">file.path</span>(d, <span class="st">"samples.zip"</span>))</a>
-<a class="sourceLine" id="cb39-8" data-line-number="8"><span class="kw">unzip</span>(<span class="kw">file.path</span>(d, <span class="st">"samples.zip"</span>), <span class="dt">exdir =</span> d)</a>
-<a class="sourceLine" id="cb39-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb39-10" data-line-number="10">fl &lt;-<span class="st"> </span><span class="kw">list.files</span>(d, <span class="dt">pattern =</span> <span class="st">"*_rsem.txt"</span>, <span class="dt">full.names=</span><span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb39-11" data-line-number="11"><span class="kw">names</span>(fl) &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">"sample(.*)_rsem.txt"</span>, <span class="st">"</span><span class="ch">\\</span><span class="st">1"</span>, <span class="kw">basename</span>(fl))</a>
-<a class="sourceLine" id="cb39-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb39-13" data-line-number="13">txi &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tximport/topics/tximport">tximport</a></span>(fl, <span class="dt">txIn =</span> <span class="ot">TRUE</span>, <span class="dt">txOut =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb39-14" data-line-number="14">                <span class="dt">geneIdCol =</span> <span class="st">"gene_id"</span>,</a>
-<a class="sourceLine" id="cb39-15" data-line-number="15">                <span class="dt">txIdCol =</span> <span class="st">"transcript_id"</span>,</a>
-<a class="sourceLine" id="cb39-16" data-line-number="16">                <span class="dt">countsCol =</span> <span class="st">"expected_count"</span>,</a>
-<a class="sourceLine" id="cb39-17" data-line-number="17">                <span class="dt">lengthCol =</span> <span class="st">"effective_length"</span>,</a>
-<a class="sourceLine" id="cb39-18" data-line-number="18">                <span class="dt">abundanceCol =</span> <span class="st">"TPM"</span>,</a>
-<a class="sourceLine" id="cb39-19" data-line-number="19">                <span class="dt">countsFromAbundance =</span> <span class="st">"scaledTPM"</span>,</a>
-<a class="sourceLine" id="cb39-20" data-line-number="20">                <span class="dt">importer =</span> <span class="cf">function</span>(x){ readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_tsv</a></span>(x) })</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">library</span>(tximport)</a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb36-4" data-line-number="4">d &lt;-<span class="st"> </span><span class="kw">tempdir</span>()</a>
+<a class="sourceLine" id="cb36-5" data-line-number="5"><span class="kw">download.file</span>(<span class="dt">url =</span> <span class="kw">paste0</span>(<span class="st">"https://www.ebi.ac.uk/arrayexpress/files/"</span>,</a>
+<a class="sourceLine" id="cb36-6" data-line-number="6">                           <span class="st">"E-MTAB-4119/E-MTAB-4119.processed.3.zip"</span>),</a>
+<a class="sourceLine" id="cb36-7" data-line-number="7">              <span class="dt">destfile =</span> <span class="kw">file.path</span>(d, <span class="st">"samples.zip"</span>))</a>
+<a class="sourceLine" id="cb36-8" data-line-number="8"><span class="kw">unzip</span>(<span class="kw">file.path</span>(d, <span class="st">"samples.zip"</span>), <span class="dt">exdir =</span> d)</a>
+<a class="sourceLine" id="cb36-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb36-10" data-line-number="10">fl &lt;-<span class="st"> </span><span class="kw">list.files</span>(d, <span class="dt">pattern =</span> <span class="st">"*_rsem.txt"</span>, <span class="dt">full.names=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb36-11" data-line-number="11"><span class="kw">names</span>(fl) &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">"sample(.*)_rsem.txt"</span>, <span class="st">"</span><span class="ch">\\</span><span class="st">1"</span>, <span class="kw">basename</span>(fl))</a>
+<a class="sourceLine" id="cb36-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb36-13" data-line-number="13">txi &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/tximport/topics/tximport">tximport</a></span>(fl, <span class="dt">txIn =</span> <span class="ot">TRUE</span>, <span class="dt">txOut =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb36-14" data-line-number="14">                <span class="dt">geneIdCol =</span> <span class="st">"gene_id"</span>,</a>
+<a class="sourceLine" id="cb36-15" data-line-number="15">                <span class="dt">txIdCol =</span> <span class="st">"transcript_id"</span>,</a>
+<a class="sourceLine" id="cb36-16" data-line-number="16">                <span class="dt">countsCol =</span> <span class="st">"expected_count"</span>,</a>
+<a class="sourceLine" id="cb36-17" data-line-number="17">                <span class="dt">lengthCol =</span> <span class="st">"effective_length"</span>,</a>
+<a class="sourceLine" id="cb36-18" data-line-number="18">                <span class="dt">abundanceCol =</span> <span class="st">"TPM"</span>,</a>
+<a class="sourceLine" id="cb36-19" data-line-number="19">                <span class="dt">countsFromAbundance =</span> <span class="st">"scaledTPM"</span>,</a>
+<a class="sourceLine" id="cb36-20" data-line-number="20">                <span class="dt">importer =</span> <span class="cf">function</span>(x){ readr<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_tsv</a></span>(x) })</a></code></pre></div>
 <p>Next, we obtain and load the ground truth information that can be used for evaluating the results of the differential expression analysis and keep this as a <em>tibble</em> called <code>truthdat</code>.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">download.file</span>(<span class="dt">url =</span> <span class="kw">paste0</span>(<span class="st">"https://www.ebi.ac.uk/arrayexpress/files/"</span>,</a>
-<a class="sourceLine" id="cb40-2" data-line-number="2">                           <span class="st">"E-MTAB-4119/E-MTAB-4119.processed.2.zip"</span>),</a>
-<a class="sourceLine" id="cb40-3" data-line-number="3">              <span class="dt">destfile =</span> <span class="kw">file.path</span>(d, <span class="st">"truth.zip"</span>))</a>
-<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="kw">unzip</span>(<span class="kw">file.path</span>(d, <span class="st">"truth.zip"</span>), <span class="dt">exdir =</span> d)</a>
-<a class="sourceLine" id="cb40-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb40-6" data-line-number="6">truthdat &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_tsv</a></span>(<span class="kw">file.path</span>(d, <span class="st">"truth_transcript.txt"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">download.file</span>(<span class="dt">url =</span> <span class="kw">paste0</span>(<span class="st">"https://www.ebi.ac.uk/arrayexpress/files/"</span>,</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2">                           <span class="st">"E-MTAB-4119/E-MTAB-4119.processed.2.zip"</span>),</a>
+<a class="sourceLine" id="cb37-3" data-line-number="3">              <span class="dt">destfile =</span> <span class="kw">file.path</span>(d, <span class="st">"truth.zip"</span>))</a>
+<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="kw">unzip</span>(<span class="kw">file.path</span>(d, <span class="st">"truth.zip"</span>), <span class="dt">exdir =</span> d)</a>
+<a class="sourceLine" id="cb37-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb37-6" data-line-number="6">truthdat &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/readr/topics/read_delim">read_tsv</a></span>(<span class="kw">file.path</span>(d, <span class="st">"truth_transcript.txt"</span>))</a></code></pre></div>
 <p>We save the <code>tximport</code> results and truth <em>tibble</em> for use in this package.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">save</span>(txi, truthdat, <span class="dt">file =</span> <span class="st">"../data/soneson2016.rda"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">save</span>(txi, truthdat, <span class="dt">file =</span> <span class="st">"../data/soneson2016.rda"</span>)</a></code></pre></div>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">

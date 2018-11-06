@@ -34,7 +34,22 @@
 
 <meta property="og:title" content="Check/Update SummarizedBenchmark — updateBench" />
 
-<meta property="og:description" content="Update SummarizedBenchmark results with new methods." />
+<meta property="og:description" content="Function to update or check status of SummarizedBenchmark
+results.
+If only a SummarizedBenchmark object is specified,
+the function will check whether `func`, `param`, `meta`, `post` or the `pkg_vers` of the
+methods in the BenchDesign stored with the
+SummarizedBenchmark do not match values stored in the
+colData. By default, no methods will be executed to update results. To actually execute updates,
+set dryrun = FALSE.
+If a BenchDesign object is specified in addition to a
+SummarizedBenchmark object, the function will check which
+methods in the new BenchDesign need to be executed to update the 
+SummarizedBenchmark results. Again, by default, no methods
+will be executed unless dryrun = FLASE is specified.
+Unless reuseParams = FALSE is specified, the parameters of the last execution session stored
+in the the colData of the SummarizedBenchmark object
+will be used." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -148,7 +163,22 @@
 
     <div class="ref-description">
     
-    <p>Update <code><a href='SummarizedBenchmark-class.html'>SummarizedBenchmark</a></code> results with new methods.</p>
+    <p>Function to update or check status of <code><a href='SummarizedBenchmark-class.html'>SummarizedBenchmark</a></code>
+results.</p>
+<p>If only a <code><a href='SummarizedBenchmark-class.html'>SummarizedBenchmark</a></code> object is specified,
+the function will check whether `func`, `param`, `meta`, `post` or the `pkg_vers` of the
+methods in the <code><a href='BenchDesign-class.html'>BenchDesign</a></code> stored with the
+<code><a href='SummarizedBenchmark-class.html'>SummarizedBenchmark</a></code> do not match values stored in the
+<code>colData</code>. By default, no methods will be executed to update results. To actually execute updates,
+set <code>dryrun = FALSE</code>.</p>
+<p>If a <code><a href='BenchDesign-class.html'>BenchDesign</a></code> object is specified in addition to a
+<code><a href='SummarizedBenchmark-class.html'>SummarizedBenchmark</a></code> object, the function will check which
+methods in the new <code><a href='BenchDesign-class.html'>BenchDesign</a></code> need to be executed to update the 
+<code><a href='SummarizedBenchmark-class.html'>SummarizedBenchmark</a></code> results. Again, by default, no methods
+will be executed unless <code>dryrun = FLASE</code> is specified.</p>
+<p>Unless <code>reuseParams = FALSE</code> is specified, the parameters of the last execution session stored
+in the the <code>colData</code> of the <code><a href='SummarizedBenchmark-class.html'>SummarizedBenchmark</a></code> object
+will be used.</p>
     
     </div>
 
@@ -202,6 +232,46 @@ specified <code><a href='buildBench.html'>buildBench</a></code> parameters still
     <div class='dont-index'><p><code><a href='buildBench.html'>buildBench</a></code></p></div>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>## load example SummarizedBenchmark object</span>
+<span class='fu'>data</span>(<span class='no'>allSB</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: data set ‘allSB’ not found</span></div><div class='input'><span class='no'>sb</span> <span class='kw'>&lt;-</span> <span class='no'>allSB</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+
+<span class='co'>## check if results are out of date</span>
+<span class='fu'>updateBench</span>(<span class='no'>sb</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: The `printer` argument is soft-deprecated as of rlang 0.3.0.</span>
+#&gt; <span class='warning'>[90mThis warning is displayed once per session.[39m</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `lang_modify()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `call_modify()` instead</span>
+#&gt; <span class='warning'>[90mThis warning is displayed once per session.[39m</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `lgl_len()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>Please use `new_logical()` instead</span>
+#&gt; <span class='warning'>[90mThis warning is displayed once per session.[39m</span></div><div class='output co'>#&gt; [1mUpdate SummarizedBenchmark (dryrun) [22m--------------------------- 
+#&gt; [33m[1m  benchmark data:[22m[39m [33munchanged (full data missing)
+#&gt; [39m    MD5 hash: 6a54d3a70bb48f54435c56fa8401adc4 
+#&gt;     names: ??</div><div class='output co'>#&gt; <span class='warning'>Warning: `mut_node_car()` is soft-deprecated as of rlang 0.2.0.</span>
+#&gt; <span class='warning'>[90mThis warning is displayed once per session.[39m</span></div><div class='output co'>#&gt; [1m  benchmark methods:
+#&gt; [22m[1m    |              | Need to  |           Outdated            |
+#&gt; [22m[1m    | Method       | (Re)Run  |  Func Param  Meta  Post  Vers |
+#&gt; [22m    | [31mkallisto-...[39m |[31m       Y[39m  |[32m     N[39m[32m     N[39m[31m     Y[39m[32m     N[39m[32m     N[39m |
+#&gt;     | [31mkallisto-...[39m |[31m       Y[39m  |[32m     N[39m[32m     N[39m[31m     Y[39m[32m     N[39m[32m     N[39m |
+#&gt;     | [31msailfish-...[39m |[31m       Y[39m  |[32m     N[39m[32m     N[39m[31m     Y[39m[32m     N[39m[32m     N[39m |
+#&gt;     | [31msalmon-de...[39m |[31m       Y[39m  |[32m     N[39m[32m     N[39m[31m     Y[39m[32m     N[39m[32m     N[39m |
+#&gt;     | [31msalmon-gc...[39m |[31m       Y[39m  |[32m     N[39m[32m     N[39m[31m     Y[39m[32m     N[39m[32m     N[39m |</div><div class='input'>
+<span class='co'>## modify BenchDesign</span>
+<span class='no'>bd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BenchDesign.html'>BenchDesign</a></span>(<span class='no'>sb</span>)
+<span class='no'>bd</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='dropMethod.html'>dropMethod</a></span>(<span class='no'>bd</span>, <span class='st'>"kallisto-default"</span>)
+
+<span class='co'>## check if results need to be updated with new BenchDesign</span>
+<span class='fu'>updateBench</span>(<span class='no'>sb</span>, <span class='no'>bd</span>)</div><div class='output co'>#&gt; [1mUpdate SummarizedBenchmark (dryrun) [22m--------------------------- 
+#&gt; [33m[1m  benchmark data:[22m[39m [33munchanged (full data missing)
+#&gt; [39m    MD5 hash: 6a54d3a70bb48f54435c56fa8401adc4 
+#&gt;     names: ??
+#&gt; [1m  benchmark methods:
+#&gt; [22m[1m    |              | Need to  |           Outdated            |
+#&gt; [22m[1m    | Method       | (Re)Run  |  Func Param  Meta  Post  Vers |
+#&gt; [22m    | [31mkallisto-...[39m |[31m       Y[39m  |[32m     N[39m[32m     N[39m[31m     Y[39m[32m     N[39m[32m     N[39m |
+#&gt;     | [31msailfish-...[39m |[31m       Y[39m  |[32m     N[39m[32m     N[39m[31m     Y[39m[32m     N[39m[32m     N[39m |
+#&gt;     | [31msalmon-de...[39m |[31m       Y[39m  |[32m     N[39m[32m     N[39m[31m     Y[39m[32m     N[39m[32m     N[39m |
+#&gt;     | [31msalmon-gc...[39m |[31m       Y[39m  |[32m     N[39m[32m     N[39m[31m     Y[39m[32m     N[39m[32m     N[39m |
+#&gt;     | [32mkallisto-...[39m |[32m       N[39m  |     -     -     -     -     - |</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -211,7 +281,9 @@ specified <code><a href='buildBench.html'>buildBench</a></code> parameters still
       <li><a href="#value">Value</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     
